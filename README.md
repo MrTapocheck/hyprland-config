@@ -4,6 +4,14 @@
 
 **Автор:** [@MrTapocheck](https://github.com/MrTapocheck)
 
+## Music lounge (Super+8)
+
+Видеофон, GIF-виджеты и визуализатор cava — отдельный workspace для прослушивания музыки.
+
+![Music lounge — workspace 8](assets/screenshots/music-lounge-ws8.png)
+
+*Super+8: mpvpaper-фон, Pepe и monkey GIF, cava внизу. Waybar по двойному Super.*
+
 ## Быстрая установка (новая система)
 
 ```bash
