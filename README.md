@@ -1,73 +1,127 @@
-# Hyprland config
+# hyprland-config
 
-Публичный конфиг Hyprland для Manjaro / Arch: рабочие столы, waybar, music lounge, imv, аудио, OSD и утилиты.
+Полный набор dotfiles для **Arch Linux / Manjaro** и **Hyprland**: Hypr, Waybar, Mako, SwayOSD, music lounge, imv, PipeWire/WirePlumber, буфер обмена и утилиты.
 
 **Автор:** [@MrTapocheck](https://github.com/MrTapocheck)
 
-## Быстрая установка
+## Быстрая установка (новая система)
 
 ```bash
-git clone git@github.com:MrTapocheck/hyprland-config.git ~/.config/hypr
-chmod +x ~/.config/hypr/*.sh
-cp ~/.config/hypr/network.local.sh.example ~/.config/hypr/network.local.sh
-# отредактируйте network.local.sh — имена Wi‑Fi из `nmcli connection show`
+sudo pacman -S --needed git base-devel
+git clone https://github.com/MrTapocheck/hyprland-config.git ~/hyprland-config
+cd ~/hyprland-config
+./install.sh
 ```
 
-Перезайдите в Hyprland или выполните `hyprctl reload`.
+Скрипт `install.sh`:
 
-## Связанные конфиги (не в этом репо)
+- ставит пакеты из `packages.txt` через `pacman` (флаг `--skip-packages`, если пакеты уже стоят);
+- создаёт симлинки `config/*` → `~/.config/*` (существующие каталоги сохраняются как `*.bak.YYYYMMDDhhmmss`);
+- кладёт `imv-dir.desktop` в `~/.local/share/applications/`;
+- подмешивает ассоциации изображений в `~/.config/mimeapps.list`;
+- копирует `network.local.sh` из примера, если файла ещё нет;
+- делает исполняемыми все `*.sh` в `config/hypr/`;
+- создаёт `~/Pictures/wallpapers/`.
 
-Часть функций опирается на соседние каталоги в `~/.config/`:
+После установки **обязательно**:
 
-| Каталог | Назначение |
-|---------|------------|
-| `waybar/` | Панель (двойной Super — показать/скрыть) |
-| `mako/` | Уведомления |
-| `swayosd/` | OSD громкости и яркости |
-| `cava/music-lounge.conf` | Визуализатор music lounge |
-| `rofi/clipboard.rasi` | Панель буфера обмена (Super+V) |
-| `hypridle.conf` | Блокировка / idle (рядом с hypr) |
+1. Отредактируйте `~/.config/hypr/network.local.sh` — имена Wi‑Fi из `nmcli connection show`.
+2. Проверьте мониторы в `~/.config/hypr/hyprland.conf` (`HDMI-A-1`, `eDP-1` и т.д.).
+3. Положите обои в `~/Pictures/wallpapers/` (`wall1.jpeg` … — как в `hyprpaper.conf` / `hyprlock.conf`).
+4. Перезайдите в Hyprland или выполните `hyprctl reload`.
+
+## Структура репозитория
+
+```
+hyprland-config/
+├── README.md
+├── LICENSE
+├── install.sh
+├── packages.txt
+├── config/
+│   ├── hypr/              # hyprland.conf, скрипты, hyprlock, music lounge
+│   ├── waybar/
+│   ├── mako/
+│   ├── swayosd/
+│   ├── cava/              # music-lounge.conf + shaders/themes
+│   ├── rofi/
+│   ├── cliphist/
+│   └── wireplumber/wireplumber.conf.d/
+└── extra/
+    ├── applications/imv-dir.desktop
+    └── mimeapps.d/hyprland-config.mimeapps
+```
+
+## Локальные файлы (не в git)
+
+| Файл | Назначение |
+|------|------------|
+| `config/hypr/network.local.sh` | Wi‑Fi и прочие личные параметры сети |
+| `*.state`, `*.restore` | runtime-состояние скриптов |
+| `obs-venv/` | локальное venv для OBS (если есть) |
+
+Шаблон сети: `config/hypr/network.local.sh.example`.
+
+## Аудио (PipeWire / WirePlumber)
+
+В репозитории:
+
+- `config/wireplumber/wireplumber.conf.d/51-auto-audio.conf` — **общее** правило приоритета USB-ЦАП;
+- `51-auto-audio.conf.example` — пример с **PCI id** встроенной звуковой карты ноутбука (`alsa_card.pci-0000_…`) для auto-profile / auto-port.
+
+Скопируйте и отредактируйте под своё железо:
+
+```bash
+cp ~/.config/wireplumber/wireplumber.conf.d/51-auto-audio.conf.example \
+   ~/.config/wireplumber/wireplumber.conf.d/51-auto-audio.conf
+# замените pci-0000_03_00.6 на свой id (wpctl status / pactl list cards short)
+systemctl --user restart wireplumber
+```
+
+Скрипт `config/hypr/audio-setup.sh` содержит константы `LAPTOP_CARD` / sink под конкретную машину — при переносе на другой ПК их нужно поправить.
 
 ## Рабочие столы
 
 | Клавиша | Workspace | Содержимое |
 |---------|-----------|------------|
 | Super+1…7 | 1–7 | Приложения (Chromium, Yakuake, Telegram, Thunar…) |
-| Super+8 | 8 | Music lounge (фон, cava, GIF-виджеты) |
+| Super+8 | 8 | Music lounge (фон, cava, виджеты) |
 | Super+9 | 9 | imv — просмотр фото |
-| Super+0 | 10 | Пустой запасной |
+| Super+0 | 10 | Запасной |
 
-## Полезные скрипты
+## Полезные скрипты (`config/hypr/`)
 
 | Скрипт | Описание |
 |--------|----------|
 | `music-lounge.sh` | Демон music lounge на ws 8 |
-| `imv-open.sh` | Открыть папку с фото в imv |
-| `audio-setup.sh` | Автовыбор аудиоустройства (PipeWire) |
+| `imv-open.sh` / `imv-menu.sh` | Просмотр папок и меню imv |
+| `audio-setup.sh` | Выбор sink при смене устройств |
 | `network-start.sh` | NetworkManager + Wi‑Fi после входа |
 | `clipboard-panel.sh` | История буфера (Super+V) |
 | `volume-osd.sh` / `brightness-osd.sh` | OSD через SwayOSD |
+| `boot-fix-network.sh` | Одноразовая настройка NM (sudo) |
 
-## Локальные настройки
+## Music lounge и mpvpaper
 
-Файл `network.local.sh` **не коммитится** — там Wi‑Fi и другие личные параметры. Шаблон: `network.local.sh.example`.
-
-Одноразовая настройка сети (опционально):
-
-```bash
-sudo ~/.config/hypr/boot-fix-network.sh
-```
-
-## Зависимости (Arch)
+Переменные — `config/hypr/music-lounge.env`. Для видеофона через mpvpaper:
 
 ```bash
-sudo pacman -S --needed hyprland hypridle hyprlock waybar mako rofi-wayland \
-  wireplumber pipewire-pulse grim slurp wl-clipboard cliphist jq \
-  brightnessctl network-manager-applet obs-studio python python-pip
+~/.config/hypr/music-lounge-install-mpvpaper.sh
 ```
 
-Дополнительно: `swayosd`, `cava`, `imv`, `mpvpaper`, `awww-daemon` — по желанию, см. скрипты в репо.
+## imv
+
+Ассоциации типов `image/*` → `imv-dir.desktop` добавляет `install.sh`. Открытие каталога: Super+9 или контекстное «Открыть с помощью».
+
+## Обновление dotfiles
+
+```bash
+cd ~/hyprland-config
+git pull
+./install.sh --skip-packages
+hyprctl reload
+```
 
 ## Лицензия
 
-MIT — используйте свободно, на свой страх и риск.
+MIT — см. [LICENSE](LICENSE).

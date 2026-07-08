@@ -1,0 +1,104 @@
+* {
+    background-color: rgba(0, 0, 0, 0%);
+    text-color: rgba(45, 45, 55, 95%);
+    border-color: rgba(180, 180, 190, 45%);
+    selected-normal-background: rgba(255, 255, 255, 82%);
+    selected-normal-foreground: rgba(25, 25, 35, 98%);
+    normal-background: rgba(0, 0, 0, 0%);
+    normal-foreground: rgba(45, 45, 55, 95%);
+    alternate-normal-background: rgba(235, 235, 240, 35%);
+    alternate-normal-foreground: rgba(45, 45, 55, 95%);
+}
+
+window {
+    height: 100%;
+    width: 360px;
+    location: east;
+    anchor: east;
+    margin: 0;
+    padding: 0;
+    border: 0 0 0 2px;
+    border-radius: 14px 0 0 14px;
+    background-color: rgba(245, 245, 247, 88%);
+}
+
+mainbox {
+    expand: true;
+    padding: 14px 12px 12px 12px;
+    spacing: 10px;
+    background-color: transparent;
+}
+
+inputbar {
+    padding: 0 2px 8px 2px;
+    spacing: 8px;
+    children: [ prompt, entry ];
+    background-color: transparent;
+}
+
+prompt {
+    padding: 6px 10px;
+    background-color: rgba(220, 220, 228, 75%);
+    text-color: rgba(60, 60, 70, 95%);
+    border-radius: 10px;
+}
+
+entry {
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 72%);
+    text-color: rgba(35, 35, 45, 95%);
+    border-radius: 10px;
+}
+
+listview {
+    padding: 4px 0 0 0;
+    spacing: 4px;
+    lines: 18;
+    columns: 1;
+    dynamic: false;
+    fixed-height: true;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px 10px;
+    spacing: 10px;
+    border-radius: 10px;
+    children: [ element-icon, element-text ];
+}
+
+element-icon {
+    size: 52px;
+    margin: 0 4px 0 0;
+    cursor: default;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: rgba(45, 45, 55, 95%);
+}
+
+element selected.normal {
+    background-color: rgba(255, 255, 255, 82%);
+    text-color: rgba(25, 25, 35, 98%);
+}
+
+element alternate.normal {
+    background-color: rgba(235, 235, 240, 35%);
+    text-color: rgba(45, 45, 55, 95%);
+}
+
+message {
+    background-color: transparent;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: rgba(45, 45, 55, 95%);
+}

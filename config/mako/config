@@ -1,0 +1,35 @@
+# Уведомления: справа снизу, сами исчезают
+
+anchor=bottom-right
+layer=overlay
+
+font=JetBrains Mono 11
+width=360
+padding=10
+margin=12,12,12,12
+border-size=2
+border-radius=10
+
+background-color=#1e1e2ee6
+text-color=#cdd6f4ff
+border-color=#89b4faaa
+
+default-timeout=4500
+ignore-timeout=1
+
+on-button-left=exec sh -c '"$HOME/.config/hypr/mako-focus.sh"'
+on-button-right=dismiss
+on-touch=dismiss
+
+max-visible=5
+history=1
+
+[urgency=low]
+default-timeout=3000
+
+[urgency=normal]
+default-timeout=4500
+
+[urgency=critical]
+default-timeout=8000
+border-color=#f38ba8ff

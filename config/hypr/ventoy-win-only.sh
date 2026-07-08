@@ -14,7 +14,7 @@ ISO_WIN11="Win11_25H2_English_x64_v2.iso"
 WORK=/tmp/ventoy
 MNT=/mnt/ventoy32
 VENTOY_VER="1.1.05"
-USER_NAME="${SUDO_USER:-matehuslims}"
+USER_NAME="${SUDO_USER:-$(logname 2>/dev/null || id -un)}"
 
 usb_disk_by_size() {
     local min="$1" max="$2"

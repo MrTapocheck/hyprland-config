@@ -1,0 +1,45 @@
+# Core Hyprland stack
+hyprland
+hyprpaper
+hypridle
+hyprlock
+waybar
+mako
+rofi-wayland
+swayosd
+cava
+cliphist
+wireplumber
+pipewire
+pipewire-pulse
+pipewire-alsa
+
+# Screenshots & clipboard
+grim
+slurp
+wl-clipboard
+
+# Shell utilities
+jq
+networkmanager
+brightnessctl
+polkit-gnome
+gnome-keyring
+
+# Image viewer & media (optional but used by config)
+imv
+ffmpeg
+
+# Notifications / portal helpers
+libnotify
+
+# Fonts (waybar / rofi)
+ttf-jetbrains-mono-nerd
+
+# Cursor theme referenced in hyprland.conf
+nordic-cursor-theme
+
+# Common apps referenced in autostart (install or edit autostart-apps.sh)
+chromium
+thunar
+konsole

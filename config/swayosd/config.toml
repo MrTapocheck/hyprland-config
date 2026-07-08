@@ -1,0 +1,10 @@
+[server]
+style = "style.css"
+top_margin = 0.10
+show_percentage = true
+min_brightness = 5
+max_volume = 150
+
+[client]
+max-items = 50
+preview-width = 120

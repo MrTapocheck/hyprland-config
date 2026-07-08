@@ -1,0 +1,12 @@
+# Fragment merged by install.sh into ~/.config/mimeapps.list
+[Default Applications]
+image/jpeg=imv-dir.desktop
+image/png=imv-dir.desktop
+image/webp=imv-dir.desktop
+image/gif=imv-dir.desktop
+image/bmp=imv-dir.desktop
+image/tiff=imv-dir.desktop
+image/svg+xml=imv-dir.desktop
+image/x-portable-pixmap=imv-dir.desktop
+image/x-png=imv-dir.desktop
+image/x-jpeg=imv-dir.desktop

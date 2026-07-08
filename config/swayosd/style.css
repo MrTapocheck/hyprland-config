@@ -1,0 +1,59 @@
+window#osd {
+    border-radius: 16px;
+    border: 2px solid rgba(137, 180, 250, 0.45);
+    background: rgba(30, 30, 46, 0.94);
+    padding: 4px 6px;
+    min-width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+window#osd #container {
+    margin: 10px 14px;
+    padding: 2px 4px;
+}
+
+window#osd image {
+    -gtk-icon-transform: scale(0.85);
+    margin-right: 2px;
+}
+
+window#osd image,
+window#osd label {
+    color: #cdd6f4;
+    font-family: "JetBrains Mono", "Iosevka Nerd Font", monospace;
+    font-weight: 600;
+}
+
+window#osd label.title-4 {
+    font-size: 13px;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+    opacity: 0.45;
+}
+
+window#osd progressbar {
+    min-height: 8px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+}
+
+window#osd trough {
+    min-height: 8px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(69, 71, 90, 0.85);
+}
+
+window#osd progress {
+    min-height: 8px;
+    border-radius: 999px;
+    border: none;
+    background: #89b4fa;
+}
+
+window#osd progressbar:disabled progress {
+    background: #6c7086;
+}

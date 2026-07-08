@@ -1,0 +1,177 @@
+* {
+    font-family: "Iosevka Nerd Font", "Hack Nerd Font Mono", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(30, 30, 46, 0.92);
+    color: #cdd6f4;
+    border-radius: 12px;
+    border: 2px solid rgba(137, 180, 250, 0.35);
+}
+
+#workspaces {
+    margin: 0 2px;
+}
+
+#workspaces button {
+    min-width: 28px;
+    padding: 2px 5px;
+    margin: 2px 1px;
+    border-radius: 8px;
+    color: #a6adc8;
+    background: rgba(49, 50, 68, 0.55);
+    border: none;
+    box-shadow: none;
+}
+
+#workspaces button.active {
+    color: #1e1e2e;
+    background: #89b4fa;
+}
+
+#workspaces button.empty {
+    opacity: 0.55;
+}
+
+#workspaces button.urgent {
+    color: #1e1e2e;
+    background: #f38ba8;
+}
+
+#workspaces .workspace-label {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 0 0 2px;
+    margin: 0;
+    min-height: 0;
+}
+
+#workspaces .taskbar-window {
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+    min-width: 0;
+    min-height: 0;
+}
+
+#workspaces .taskbar-window image {
+    margin: 0 1px;
+}
+
+#workspaces .taskbar-window.active {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+}
+
+#workspaces button.active .taskbar-window.active {
+    background: rgba(30, 30, 46, 0.22);
+}
+
+#window,
+#language,
+#pulseaudio,
+#network,
+#battery,
+#clock,
+#tray {
+    padding: 0 10px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    background: rgba(49, 50, 68, 0.85);
+}
+
+#pulseaudio.muted {
+    color: #f38ba8;
+}
+
+#battery {
+    color: #a6e3a1;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #89b4fa;
+}
+
+#battery.warning {
+    color: #fab387;
+}
+
+#battery.critical {
+    color: #f38ba8;
+}
+
+#network.disconnected {
+    color: #f38ba8;
+}
+
+#custom-pwr {
+    padding: 0 10px 0 2px;
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    font-size: 28px;
+    min-width: 36px;
+    color: #6c7086;
+}
+
+#custom-pwr.on {
+    color: #a6e3a1;
+}
+
+#custom-gap1,
+#custom-gap2,
+#custom-gap3,
+#custom-gap4,
+#custom-gap5 {
+    padding: 0;
+    margin: 4px 0;
+    min-width: 8px;
+    font-size: 0;
+    background: transparent;
+}
+
+#custom-gap4 {
+    min-width: 10px;
+}
+
+#custom-gap5 {
+    min-width: 10px;
+    margin-right: 0;
+}
+
+#custom-gap2 {
+    min-width: 14px;
+}
+
+#battery {
+    margin-right: 0;
+    padding-right: 8px;
+}
+
+#clock {
+    margin-left: 0;
+    padding: 0 8px;
+    min-width: 0;
+}
+
+#custom-sleep,
+#custom-shutdown {
+    padding: 0 10px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    background: rgba(49, 50, 68, 0.85);
+    font-size: 16px;
+}
+
+#custom-sleep {
+    color: #89b4fa;
+    margin-left: 0;
+}
+
+#custom-shutdown {
+    color: #f38ba8;
+    margin-right: 0;
+}

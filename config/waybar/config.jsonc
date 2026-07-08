@@ -1,0 +1,148 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 4,
+    "margin-top": 6,
+    "margin-left": 8,
+    "margin-right": 8,
+    "start_hidden": true,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "hyprland/language",
+        "pulseaudio",
+        "network",
+        "battery",
+        "custom/gap1",
+        "custom/pwr",
+        "custom/gap2",
+        "clock",
+        "custom/gap3",
+        "tray",
+        "custom/gap4",
+        "custom/sleep",
+        "custom/shutdown",
+        "custom/gap5"
+    ],
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{windows} {id}",
+        "format-window-separator": "",
+        "ignore-workspaces": [
+            "^1[0-9]$",
+            "^[2-9][0-9]$"
+        ],
+        "workspace-taskbar": {
+            "enable": true,
+            "update-active-window": true,
+            "format": "{icon}",
+            "icon-size": 16,
+            "icon-theme": "Papirus",
+            "orientation": "horizontal"
+        }
+    },
+
+    "hyprland/window": {
+        "max-length": 50,
+        "separate-outputs": true
+    },
+
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "EN",
+        "format-ru": "RU"
+    },
+
+    "pulseaudio": {
+        "format": "vol {volume}%",
+        "format-muted": "muted",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    },
+
+    "network": {
+        "format-wifi": "wifi {signalStrength}%",
+        "format-ethernet": "lan",
+        "format-disconnected": "offline",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "battery": {
+        "interval": 2,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}% · {time}",
+        "format-charging": "{icon} {capacity}% · {time}",
+        "format-plugged": "{icon} {capacity}%",
+        "format-time": "{H}ч {M}м",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "custom/pwr": {
+        "exec": "~/.config/hypr/power-toggle-label.sh",
+        "return-type": "json",
+        "interval": 1,
+        "format": "{text}",
+        "escape": false,
+        "tooltip": true,
+        "on-click": "~/.config/hypr/power-mode.sh toggle"
+    },
+
+    "custom/gap1": {
+        "format": " ",
+        "tooltip": false
+    },
+
+    "custom/gap2": {
+        "format": " ",
+        "tooltip": false
+    },
+
+    "custom/gap3": {
+        "format": " ",
+        "tooltip": false
+    },
+
+    "custom/gap4": {
+        "format": " ",
+        "tooltip": false
+    },
+
+    "custom/sleep": {
+        "format": "󰒲",
+        "tooltip": "Сон",
+        "on-click": "~/.config/hypr/suspend.sh"
+    },
+
+    "custom/shutdown": {
+        "format": "󰐥",
+        "tooltip": "Выключение",
+        "on-click": "~/.config/hypr/poweroff.sh"
+    },
+
+    "custom/gap5": {
+        "format": " ",
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%H:%M  %d.%m.%Y}\n<tt>{calendar}</tt>",
+        "format-alt": "{:%A, %d %B %Y}"
+    },
+
+    "tray": {
+        "spacing": 12
+    }
+}

@@ -1,0 +1,29 @@
+# Copy to 51-auto-audio.conf and set your laptop sound card PCI id
+# (find with: wpctl status | head, or pactl list cards short)
+#
+#   cp 51-auto-audio.conf.example 51-auto-audio.conf
+#   # edit the pci-XXXX_XX_X.X placeholder below
+
+monitor.alsa.rules = [
+  {
+    matches = [
+      { device.name = "alsa_card.pci-0000_03_00.6" }
+    ]
+    actions = {
+      update-props = {
+        api.acp.auto-profile = true
+        api.acp.auto-port = true
+      }
+    }
+  }
+  {
+    matches = [
+      { node.name = "~alsa_output.usb-.*" }
+    ]
+    actions = {
+      update-props = {
+        priority.session = 1500
+      }
+    }
+  }
+]
