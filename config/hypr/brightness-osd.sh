@@ -10,10 +10,10 @@ focused_monitor() {
 
 case "${1:-}" in
     up|+)
-        delta="+${STEP}"
+        delta="+${STEP}%"
         ;;
     down|-)
-        delta="-${STEP}"
+        delta="${STEP}%-"
         ;;
     *)
         echo "Usage: $0 {up|down}" >&2
@@ -21,7 +21,17 @@ case "${1:-}" in
         ;;
 esac
 
+if ! brightnessctl --device="$BACKLIGHT" set "$delta" 2>/dev/null; then
+    brightnessctl set "$delta"
+fi
+
+current=$(brightnessctl --device="$BACKLIGHT" get 2>/dev/null || brightnessctl get)
+max=$(brightnessctl --device="$BACKLIGHT" max 2>/dev/null || brightnessctl max)
+pct=$(( current * 100 / max ))
+progress=$(awk -v c="$current" -v m="$max" 'BEGIN { printf "%.3f", c / m }')
+
 swayosd-client \
     --monitor "$(focused_monitor)" \
-    --brightness "$delta" \
-    --device "$BACKLIGHT"
+    --custom-icon "display-brightness-symbolic" \
+    --custom-progress "$progress" \
+    --custom-progress-text "${pct}%"
