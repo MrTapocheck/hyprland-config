@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Скопируйте в network.local.sh и укажите свои Wi‑Fi (имена из `nmcli connection show`):
+#
+#   cp network.local.sh.example network.local.sh
+#
+WIFI_CONNS=(YOUR_WIFI_1 YOUR_WIFI_2)

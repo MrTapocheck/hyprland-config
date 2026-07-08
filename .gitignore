@@ -1,0 +1,20 @@
+# Локальные переопределения (Wi‑Fi, пути и т.д.)
+network.local.sh
+
+# Состояние / runtime
+*.state
+*.restore
+power-mode.state
+power-mode.restore
+
+# Python venv
+obs-venv/
+__pycache__/
+*.pyc
+
+# Временные файлы
+*.log
+*.tmp
+.DS_Store
+*.kate-swp
+*~

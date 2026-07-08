@@ -1,0 +1,10 @@
+# Опционально — cpupower без пароля (governor + частота в экономном режиме).
+# Установка без vim:
+#
+#   sudo tee /etc/sudoers.d/hypr-power << 'EOF'
+#   matehuslims ALL=(ALL) NOPASSWD: /usr/bin/cpupower
+#   EOF
+#   sudo chmod 440 /etc/sudoers.d/hypr-power
+#   sudo visudo -c -f /etc/sudoers.d/hypr-power
+#
+# ryzenadj не нужен — на этой машине нет ryzen_smu.
