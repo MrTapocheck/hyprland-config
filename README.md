@@ -21,7 +21,8 @@ cd ~/hyprland-config
 - подмешивает ассоциации изображений в `~/.config/mimeapps.list`;
 - копирует `network.local.sh` из примера, если файла ещё нет;
 - делает исполняемыми все `*.sh` в `config/hypr/`;
-- создаёт `~/Pictures/wallpapers/`.
+- создаёт `~/Pictures/wallpapers/`;
+- ставит симлинки медиа music lounge (`assets/music-lounge/` → `~/Videos/`).
 
 После установки **обязательно**:
 
@@ -38,6 +39,8 @@ hyprland-config/
 ├── LICENSE
 ├── install.sh
 ├── packages.txt
+├── assets/
+│   └── music-lounge/      # фон ws 8: bg.mp4 + GIF-виджеты (в репозитории)
 ├── config/
 │   ├── hypr/              # hyprland.conf, скрипты, hyprlock, music lounge
 │   ├── waybar/
@@ -101,13 +104,29 @@ systemctl --user restart wireplumber
 | `volume-osd.sh` / `brightness-osd.sh` | OSD через SwayOSD |
 | `boot-fix-network.sh` | Одноразовая настройка NM (sudo) |
 
-## Music lounge и mpvpaper
+## Music lounge (Super+8)
 
-Переменные — `config/hypr/music-lounge.env`. Для видеофона через mpvpaper:
+В репозитории уже лежат медиа для восьмого workspace:
+
+| Файл | Назначение |
+|------|------------|
+| `assets/music-lounge/bg.mp4` | Зацикленный фон (~5 мин, без звука) |
+| `assets/music-lounge/widget-left.gif` | Виджет слева |
+| `assets/music-lounge/widget-right.gif` | Виджет справа |
+| `config/cava/music-lounge.conf` | Визуализатор cava (SDL, зелёный → голубой) |
+
+`install.sh` создаёт симлинки:
+
+- `~/Videos/music-lounge-bg.mp4` → `bg.mp4`
+- `~/Videos/music-lounge/widget-*.gif` → GIF из репо
+
+Переменные — `config/hypr/music-lounge.env`. Для видеофона через **mpvpaper** (слой обоев, не перекрывает waybar):
 
 ```bash
 ~/.config/hypr/music-lounge-install-mpvpaper.sh
 ```
+
+Запуск: **Super+8** или `music-lounge-goto.sh`.
 
 ## imv
 

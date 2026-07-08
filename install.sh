@@ -115,6 +115,28 @@ install_wireplumber_snippets() {
     done
 }
 
+install_music_lounge_assets() {
+    local src="${REPO_ROOT}/assets/music-lounge"
+    [[ -d "$src" ]] || return 0
+
+    mkdir -p "${HOME}/Videos/music-lounge"
+
+    link_asset() {
+        local file="$1"
+        local dest="$2"
+        [[ -f "${src}/${file}" ]] || return 0
+        if [[ -e "$dest" && ! -L "$dest" ]]; then
+            backup_path "$dest"
+        fi
+        ln -sfn "${src}/${file}" "$dest"
+        echo "  linked: ${dest} -> ${src}/${file}"
+    }
+
+    link_asset bg.mp4 "${HOME}/Videos/music-lounge-bg.mp4"
+    link_asset widget-left.gif "${HOME}/Videos/music-lounge/widget-left.gif"
+    link_asset widget-right.gif "${HOME}/Videos/music-lounge/widget-right.gif"
+}
+
 ensure_network_local() {
     local example="${CONFIG_SRC}/hypr/network.local.sh.example"
     local target="${HOME}/.config/hypr/network.local.sh"
@@ -144,6 +166,9 @@ for dir in hypr waybar mako swayosd cava rofi cliphist; do
 done
 install_wireplumber_snippets
 
+echo "==> Music lounge media"
+install_music_lounge_assets
+
 echo "==> Desktop & MIME"
 install_desktop_entry
 merge_mimeapps
@@ -161,7 +186,8 @@ Next steps:
   3. Optional: ~/.config/hypr/audio-setup.sh — set LAPTOP_CARD / sink for your hardware
   4. Optional: copy wireplumber 51-auto-audio.conf.example → 51-auto-audio.conf and set PCI id
   5. Put wallpapers in ~/Pictures/wallpapers/ (wall1.jpeg … used by hyprpaper/hyprlock)
-  6. Log out and back into Hyprland (or: hyprctl reload)
+  6. Optional: ~/.config/hypr/music-lounge-install-mpvpaper.sh (wallpaper-layer video on ws 8)
+  7. Log out and back into Hyprland (or: hyprctl reload)
 
 Repo: ${REPO_ROOT}
 EOF

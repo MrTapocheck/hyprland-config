@@ -29,6 +29,7 @@ gnome-keyring
 # Image viewer & media (optional but used by config)
 imv
 ffmpeg
+mpv
 
 # Notifications / portal helpers
 libnotify
