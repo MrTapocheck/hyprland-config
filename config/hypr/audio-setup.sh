@@ -5,6 +5,15 @@ LAPTOP_CARD="alsa_card.pci-0000_03_00.6"
 LAPTOP_PROFILE="output:analog-stereo+input:analog-stereo"
 LAPTOP_SINK="alsa_output.pci-0000_03_00.6.analog-stereo"
 DAC_PREFIX="alsa_output.usb-TempoTec"
+PREF_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/hypr/audio-output.pref"
+
+read_pref() {
+    if [[ -f "$PREF_FILE" ]]; then
+        tr -d '[:space:]' <"$PREF_FILE"
+    else
+        echo "auto"
+    fi
+}
 
 card_profile() {
     local card="$1"
@@ -18,24 +27,47 @@ default_sink_name() {
     pactl get-default-sink 2>/dev/null || true
 }
 
+sink_available() {
+    local sink="$1"
+    pactl list sinks short 2>/dev/null | awk -v s="$sink" '$2 == s { found=1 } END { exit !found }'
+}
+
+find_dac_sink() {
+    pactl list sinks short 2>/dev/null | awk -v p="$DAC_PREFIX" '
+        $2 ~ "^" p && $2 !~ /\.monitor$/ { print $2; exit }
+    '
+}
+
 sink_description() {
     local name="${1:-@DEFAULT_AUDIO_SINK@}"
     wpctl inspect "$name" 2>/dev/null \
         | awk -F'"' '/node.description/ { print $2; exit }'
 }
 
-pick_best_sink() {
-    local line name
-    while read -r line; do
-        name=${line#*$'\t'}
-        name=${name#*$'\t'}
-        [[ "$name" == *".monitor" ]] && continue
-        [[ "$name" == "$DAC_PREFIX"* ]] && { echo "$name"; return; }
-    done < <(pactl list sinks short 2>/dev/null || true)
+resolve_target_sink() {
+    local pref dac_sink
+    pref=$(read_pref)
+    dac_sink=$(find_dac_sink)
 
-    if pactl list sinks short 2>/dev/null | awk -v s="$LAPTOP_SINK" '$2 == s { found=1 } END { exit !found }'; then
-        echo "$LAPTOP_SINK"
-    fi
+    case "$pref" in
+        laptop)
+            echo "$LAPTOP_SINK"
+            ;;
+        dac)
+            if [[ -n "$dac_sink" ]]; then
+                echo "$dac_sink"
+            else
+                echo "$LAPTOP_SINK"
+            fi
+            ;;
+        auto|*)
+            if [[ -n "$dac_sink" ]]; then
+                echo "$dac_sink"
+            else
+                echo "$LAPTOP_SINK"
+            fi
+            ;;
+    esac
 }
 
 ensure_audio() {
@@ -43,20 +75,20 @@ ensure_audio() {
         pactl set-card-profile "$LAPTOP_CARD" "$LAPTOP_PROFILE" 2>/dev/null || true
     fi
 
-    local current best
+    local target current
+    target=$(resolve_target_sink)
     current=$(default_sink_name)
-    best=$(pick_best_sink)
 
-    if [[ -z "$best" ]]; then
+    if [[ -z "$target" ]]; then
         return
     fi
 
-    if [[ -z "$current" || "$current" == "auto_null" || "$current" != "$best" ]]; then
-        if [[ "$best" == "$DAC_PREFIX"* ]] || [[ "$current" == "auto_null" || -z "$current" ]]; then
-            pactl set-default-sink "$best" 2>/dev/null || true
-        elif [[ "$current" != "$LAPTOP_SINK" && "$best" == "$LAPTOP_SINK" ]]; then
-            pactl set-default-sink "$best" 2>/dev/null || true
-        fi
+    if ! sink_available "$target"; then
+        target="$LAPTOP_SINK"
+    fi
+
+    if [[ -z "$current" || "$current" == "auto_null" || "$current" != "$target" ]]; then
+        pactl set-default-sink "$target" 2>/dev/null || true
     fi
 }
 

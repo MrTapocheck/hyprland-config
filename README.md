@@ -48,7 +48,8 @@ hyprland-config/
 ├── install.sh
 ├── packages.txt
 ├── assets/
-│   └── music-lounge/      # фон ws 8: bg.mp4 + GIF-виджеты (в репозитории)
+│   ├── music-lounge/      # фон ws 8: bg.mp4 + GIF-виджеты
+│   └── screenshots/       # превью для README
 ├── config/
 │   ├── hypr/              # hyprland.conf, скрипты, hyprlock, music lounge
 │   ├── waybar/
@@ -112,7 +113,7 @@ systemctl --user restart wireplumber
 | `volume-osd.sh` / `brightness-osd.sh` | OSD через SwayOSD |
 | `boot-fix-network.sh` | Одноразовая настройка NM (sudo) |
 
-## Music lounge (Super+8)
+## Music lounge — детали
 
 В репозитории уже лежат медиа для восьмого workspace:
 
@@ -135,6 +136,25 @@ systemctl --user restart wireplumber
 ```
 
 Запуск: **Super+8** или `music-lounge-goto.sh`.
+
+## Suspend и крышка ноутбука
+
+На Ryzen + amdgpu **s2idle зависает**; рабочий режим — **deep (S3)**. Крышка и кнопка сна waybar идут одним путём: `systemctl suspend` + hypridle (по [wiki](https://wiki.hypr.land/Hypr-Ecosystem/hypridle/)).
+
+Однократно (sudo), затем **перезагрузка** (не `restart systemd-logind` в сессии!):
+
+```bash
+cd ~/hyprland-config
+sudo ./install-lid-safe.sh
+sudo reboot
+```
+
+После перезагрузки:
+- **Крышка закрыта** / **кнопка сна waybar** / **Super+Shift+Z** → suspend (deep)
+- **Крышка открыта** → пробуждение, `after-sleep.sh` включает экран
+- **20 мин бездействия** (hypridle) → lock + экран off, без suspend
+
+`lactd` отключается при install — мешал amdgpu при suspend.
 
 ## imv
 

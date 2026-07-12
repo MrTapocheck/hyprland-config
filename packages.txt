@@ -17,6 +17,7 @@ pipewire-alsa
 # Screenshots & clipboard
 grim
 slurp
+spectacle
 wl-clipboard
 
 # Shell utilities

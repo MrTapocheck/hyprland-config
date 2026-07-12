@@ -64,7 +64,9 @@
     "pulseaudio": {
         "format": "vol {volume}%",
         "format-muted": "muted",
+        "tooltip-format": "{desc} · {volume}%",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "~/.config/hypr/audio-switch.sh",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     },
